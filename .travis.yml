@@ -9,12 +9,12 @@ script:
     - docker run -e CI=true tomeri/client-test npm test
 
 after_success:
-    - docker build -t tomeri/complex-client ./client
-    - docker build -t tomeri/complex-nginx ./nginx
-    - docker build -t tomeri/complex-server ./server
-    - docker build -t tomeri/complex-worker ./worker
+    - docker build -t tkelemen/complex-client ./client
+    - docker build -t tkelemen/complex-nginx ./nginx
+    - docker build -t tkelemen/complex-server ./server
+    - docker build -t tkelemen/complex-worker ./worker
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-    - docker push tomeri/complex-client
-    - docker push tomeri/complex-nginx
-    - docker push tomeri/complex-server
-    - docker push tomeri/complex-worker
+    - docker push tkelemen/complex-client
+    - docker push tkelemen/complex-nginx
+    - docker push tkelemen/complex-server
+    - docker push tkelemen/complex-worker
