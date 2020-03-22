@@ -1,0 +1,20 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t tomeri/client-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true tomeri/client-test npm test
+
+after_success:
+    - docker build -t tomeri/complex-client ./client
+    - docker build -t tomeri/complex-nginx ./nginx
+    - docker build -t tomeri/complex-server ./server
+    - docker build -t tomeri/complex-worker ./worker
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push tomeri/complex-client
+    - docker push tomeri/complex-nginx
+    - docker push tomeri/complex-server
+    - docker push tomeri/complex-worker
